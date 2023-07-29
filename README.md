@@ -11,11 +11,11 @@ This repository contains a bash script to automate the process of updating a hea
 1. Copy the script to your server.
 2. Make the script executable:
 ```bash
-chmod +x update_game.sh
+chmod +x update-game.sh
 ```
 3. Run the script with escalated privileges (necessary for the systemctl commands inside):
 ```bash
-sudo ./update_game.sh
+sudo ./update-game.sh
 ```
 4. Enjoy
 ### Prerequisites

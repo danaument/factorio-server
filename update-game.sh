@@ -34,7 +34,12 @@ cp $OLD_FACTORIO_DIR/data/server-whitelist.json $FACTORIO_DIR/data/
 cp -r $OLD_FACTORIO_DIR/saves $FACTORIO_DIR/
 cp -r $OLD_FACTORIO_DIR/mods $FACTORIO_DIR/
 cp $OLD_FACTORIO_DIR/server-id.json $FACTORIO_DIR/
+mkdir $FACTORIO_DIR/config
 cp $OLD_FACTORIO_DIR/config/config.ini $FACTORIO_DIR/config/
+
+# Set the owner of the Factorio directory to the "factorio" user
+echo "Changing owner of $FACTORIO_DIR to factorio:factorio"
+chown -R factorio:factorio $FACTORIO_DIR
 
 # Remove the temporary directory
 echo "Cleaning up $TMP_DIR"

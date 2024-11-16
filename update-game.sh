@@ -2,11 +2,31 @@
 
 # Define the locations of your files
 FACTORIO_DIR="/opt/factorio"
-DOWNLOAD_URL="https://factorio.com/get-download/stable/headless/linux64"
 TMP_DIR="/tmp/factorio"
 
 # Get the current date
 DATE=$(date +%Y-%m-%d)
+
+# Check if a version argument is provided
+if [ -z "$1" ]; then
+  echo "Error: No version specified."
+  echo "Usage: $0 <version>"
+  echo "Example: $0 1.1.110"
+  exit 1
+fi
+
+VERSION=$1
+
+# Validate the provided version by checking the download URL
+DOWNLOAD_URL="https://factorio.com/get-download/${VERSION}/headless/linux64"
+echo "Validating version ${VERSION}..."
+
+if ! wget --spider --quiet "$DOWNLOAD_URL"; then
+  echo "Error: Version ${VERSION} is invalid or not available."
+  exit 1
+fi
+
+echo "Version ${VERSION} is valid. Proceeding with the update..."
 
 # Rename the old Factorio directory with date appended
 OLD_FACTORIO_DIR="${FACTORIO_DIR}_$DATE"
@@ -14,7 +34,7 @@ echo "Moving $FACTORIO_DIR to $OLD_FACTORIO_DIR"
 mv $FACTORIO_DIR $OLD_FACTORIO_DIR
 
 # Download the new version of Factorio
-echo "Downloading Factorio to $TMP_DIR"
+echo "Downloading Factorio version $VERSION to $TMP_DIR"
 mkdir -p $TMP_DIR
 cd $TMP_DIR
 wget $DOWNLOAD_URL -O factorio.tar.xz
